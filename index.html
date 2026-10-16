@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Three Up AutomataのOSC2026 Tokyo/Fall展示。OSSでつなぐTeach → Think → Act。LeRobot、SO-101、LLMを組み合わせて小さなPhysical AIシステムを構築する取り組みを紹介します。">
+  <meta name="theme-color" content="#10272b">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Three Up Automata">
+  <meta property="og:title" content="Physical AIを、自分の手でつくる。 | Three Up Automata">
+  <meta property="og:description" content="OSSでつなぐ Teach → Think → Act｜OSC2026 Tokyo/Fall 展示紹介">
+  <meta property="og:url" content="https://mikami235.github.io/osc2026-physical-ai/">
+  <title>Physical AIを、自分の手でつくる。 | Three Up Automata</title>
+  <style>
+    :root {
+      --ink: #172b2d; --ink-soft: #516466; --deep: #10272b;
+      --sea: #17766a; --sea-deep: #0b5b53; --lime: #c8f5ca;
+      --paper: #f8faf7; --white: #ffffff; --line: #dce5e0;
+      --sand: #e9f1eb; --shadow: 0 18px 48px rgba(14,41,42,.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif; line-height: 1.8; }
+    a { color: var(--sea-deep); }
+    a:focus-visible { outline: 3px solid #60c8b2; outline-offset: 4px; border-radius: 3px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .skip { position: absolute; left: 12px; top: -60px; z-index: 20; background: #fff; color: #000; padding: 10px; }
+    .skip:focus { top: 12px; }
+    .wrap { width: min(1120px, calc(100% - 44px)); margin-inline: auto; }
+    header { background: var(--deep); color: #fff; }
+    .nav { min-height: 76px; display: flex; justify-content: space-between; gap: 24px; align-items: center; border-bottom: 1px solid rgba(255,255,255,.15); }
+    .brand { font-weight: 800; font-size: .94rem; letter-spacing: .11em; text-decoration: none; color: #fff; white-space: nowrap; }
+    .brand-mark { display: inline-flex; vertical-align: middle; margin-right: 10px; width: 22px; height: 22px; border: 5px solid var(--lime); border-radius: 50%; box-shadow: 11px 0 0 -4px #72cbbb; }
+    .nav-links { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; font-size: .84rem; color: #dbeae4; }
+    .nav-links a:hover { color: var(--lime); }
+    .hero { position: relative; overflow: hidden; padding: 78px 0 104px; background: radial-gradient(ellipse at 86% 30%, rgba(50,123,112,.32), transparent 40%), var(--deep); color: #fff; }
+    .hero-grid { display: grid; grid-template-columns: 1.18fr .82fr; gap: 60px; align-items: center; }
+    .eyebrow { text-transform: uppercase; font-size: .74rem; font-weight: 800; letter-spacing: .17em; color: #89d9c7; }
+    .event { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(200,245,202,.32); border-radius: 30px; padding: 7px 13px; font-size: .76rem; color: #e4f3e8; margin: 22px 0 16px; }
+    .event::before { content: ""; width: 7px; height: 7px; background: #b9efb2; border-radius: 50%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); line-height: 1.35; letter-spacing: -.055em; margin: 0 0 18px; font-weight: 850; }
+    .hero h1 em { color: var(--lime); font-style: normal; }
+    .hero-lead { font-size: clamp(1rem, 2vw, 1.16rem); line-height: 1.95; color: #d5e4de; max-width: 610px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .button { display: inline-flex; justify-content: center; align-items: center; padding: 12px 20px; min-height: 48px; background: var(--lime); color: #143d33; border-radius: 8px; text-decoration: none; font-size: .9rem; font-weight: 800; transition: transform .15s; }
+    .button:hover { transform: translateY(-2px); }
+    .button-alt { background: transparent; color: #fff; border: 1px solid #83a7a0; }
+    .hero-board { position: relative; padding: 26px; border-radius: 19px; background: linear-gradient(145deg, rgba(253,255,251,.13), rgba(253,255,251,.045)); border: 1px solid rgba(227,251,235,.27); box-shadow: 0 30px 70px rgba(0,0,0,.18); }
+    .board-caption { font-size: .7rem; letter-spacing: .13em; font-weight: 800; color: #bcd5ce; margin-bottom: 20px; }
+    .flow-step { border: 1px solid rgba(237,255,245,.2); border-radius: 12px; background: rgba(255,255,255,.08); padding: 13px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .flow-step strong { display: block; font-size: 1.2rem; line-height: 1.4; color: #ecfff2; letter-spacing: .02em; }
+    .flow-step span { display: block; font-size: .73rem; line-height: 1.5; color: #cce1db; }
+    .flow-step b { width: 40px; height: 40px; border-radius: 11px; background: #d0f5ce; color: #124a43; display: grid; place-items: center; font-size: 1.12rem; flex-shrink: 0; }
+    .flow-arrow { height: 31px; position: relative; text-align: center; color: #b9e4c8; font-size: 1.18rem; line-height: 31px; }
+    .board-foot { display: flex; justify-content: space-between; gap: 8px; font-size: .68rem; color: #a2c3b8; margin-top: 21px; letter-spacing: .08em; }
+    main { overflow: hidden; }
+    section { padding: 86px 0; }
+    .section-kicker { display: block; color: var(--sea); font-size: .75rem; letter-spacing: .16em; font-weight: 900; margin-bottom: 12px; }
+    .section-head { max-width: 780px; margin-bottom: 32px; }
+    h2 { font-size: clamp(1.65rem, 3.2vw, 2.45rem); line-height: 1.46; letter-spacing: -.04em; margin-bottom: 15px; }
+    .section-head p { color: var(--ink-soft); font-size: 1rem; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-items: center; }
+    .quote { border-left: 5px solid var(--sea); background: var(--sand); border-radius: 0 14px 14px 0; padding: 28px; color: #244c46; font-weight: 650; font-size: clamp(1.06rem, 2vw, 1.23rem); line-height: 1.9; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { border: 1px solid var(--line); background: var(--white); border-radius: 16px; padding: 28px; box-shadow: 0 8px 24px rgba(20,44,38,.03); }
+    .card-num { font-size: .74rem; letter-spacing: .16em; color: var(--sea); font-weight: 900; }
+    .card h3 { font-size: 1.43rem; letter-spacing: -.02em; margin: 9px 0 9px; }
+    .card p { font-size: .93rem; color: var(--ink-soft); margin-bottom: 0; }
+    .card .tech { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .76rem; color: var(--sea-deep); font-weight: 700; }
+    .tinted { background: #edf4ee; }
+    .arch { background: #fff; border: 1px solid #d8e5de; border-radius: 18px; padding: 32px; box-shadow: var(--shadow); }
+    .architecture { display: flex; gap: 8px; align-items: stretch; }
+    .arch-node { flex: 1; min-width: 0; text-align: center; background: #f3f8f3; border: 1px solid #d5e4dd; border-radius: 12px; padding: 17px 10px; }
+    .arch-node .mini { color: var(--sea); font-size: .68rem; font-weight: 900; letter-spacing: .1em; display: block; }
+    .arch-node strong { display: block; margin: 7px 0; font-size: .94rem; line-height: 1.4; }
+    .arch-node span { display: block; font-size: .7rem; color: var(--ink-soft); line-height: 1.55; }
+    .arch-arrow { align-self: center; color: var(--sea); font-size: 1.35rem; line-height: 1; }
+    .architecture-note { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 20px; padding-top: 18px; border-top: 1px solid #e1e9e5; font-size: .83rem; color: var(--ink-soft); }
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .feature { border-top: 1px solid var(--line); padding: 22px 0 0; }
+    .feature h3 { font-size: 1.05rem; margin-bottom: 7px; }
+    .feature p { color: var(--ink-soft); font-size: .9rem; }
+    .note { margin-top: 28px; padding: 18px 20px; border-radius: 10px; background: #e7f2ec; border: 1px solid #cddfd4; font-size: .87rem; color: #244b43; }
+    .links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .link-card { display: flex; justify-content: space-between; gap: 14px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 13px; padding: 24px; text-decoration: none; color: var(--ink); }
+    .link-card:hover { border-color: var(--sea); }
+    .link-card strong { display: block; font-size: 1rem; }
+    .link-card small { display: block; color: var(--ink-soft); margin-top: 4px; }
+    .link-card .point { color: var(--sea-deep); font-size: 1.3rem; }
+    footer { padding: 34px 0; background: var(--deep); color: #c7d8d2; font-size: .82rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { color: #d9fae2; }
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 42px; } .hero-board { max-width: 520px; } .architecture { display: grid; grid-template-columns: 1fr; } .arch-arrow { text-align: center; transform: rotate(90deg); } }
+    @media (max-width: 680px) { .wrap { width: min(100% - 32px, 1120px); } .nav { min-height: 68px; } .brand { font-size: .8rem; } .nav-links { gap: 12px; } .nav-links a { font-size: .76rem; } .nav-links a:nth-child(2) { display: none; } .hero { padding: 54px 0 66px; } section { padding: 62px 0; } .intro-grid, .cards, .tech-grid, .links { grid-template-columns: 1fr; } .intro-grid { gap: 24px; } .card { padding: 23px; } .arch { padding: 18px; } .hero-board { padding: 20px; } h1 { font-size: clamp(2rem, 9vw, 3rem); } .footer-inner { flex-direction: column; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+<header>
+  <nav class="nav wrap" aria-label="メインナビゲーション">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>THREE UP AUTOMATA</a>
+    <div class="nav-links">
+      <a href="#concept">コンセプト</a><a href="#demo">デモ</a><a href="#system">仕組み</a><a href="#links">GitHub</a>
+    </div>
+  </nav>
+</header>
+<div class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Open Source Conference 2026 Tokyo/Fall</div>
+      <div class="event">2026.10.17 SAT · 展示紹介</div>
+      <h1>Physical AIを、<br><em>自分の手でつくる。</em></h1>
+      <p class="hero-lead">人がロボットに動作を教え、AIが指示を解釈し、ロボットが実世界で動く。<br>OSSを中心とした技術を組み合わせ、小さなPhysical AIシステムの実現に挑戦しています。</p>
+      <div class="actions"><a class="button" href="#demo">デモの仕組みを見る ↘</a><a class="button button-alt" href="https://github.com/mikami235/osc2026-so-101/tree/osc2026" target="_blank" rel="noopener noreferrer">開発リポジトリ ↗</a></div>
+    </div>
+    <div class="hero-board" aria-label="Teach Think Act の3段階">
+      <div class="board-caption">THE IDEA / TEACH → THINK → ACT</div>
+      <div class="flow-step"><div><strong>01 · Teach</strong><span>人間が動作を教える</span></div><b aria-hidden="true">T</b></div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+      <div class="flow-step"><div><strong>02 · Think</strong><span>AIが言葉をタスクに変える</span></div><b aria-hidden="true">T</b></div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+      <div class="flow-step"><div><strong>03 · Act</strong><span>SO-101が現実世界で動く</span></div><b aria-hidden="true">A</b></div>
+      <div class="board-foot"><span>OPEN SOURCE + ROBOTICS</span><span>OSC2026</span></div>
+    </div>
+  </div>
+</div>
+<main id="main">
+  <section id="concept">
+    <div class="wrap intro-grid">
+      <div>
+        <span class="section-kicker">01 / WHY WE BUILD</span>
+        <h2>AIを、画面の外へ。<br>OSSを、現実の動作へ。</h2>
+        <p>高度なAIロボティクスを、特別な研究設備がなければ触れない技術にしたくない。公開されたツール、小型ロボット、自分で書いた接続部分を組み合わせれば、個人でも「教える・考える・動く」を試せます。</p>
+        <p>この展示は完成品の発表だけではありません。どう接続し、何が難しく、どこまでできたのかを共有するための実機開発プロジェクトです。</p>
+      </div>
+      <div class="quote">「すごいロボットだ」で終わらず、<br>「自分も作ってみよう」と思える展示に。</div>
+    </div>
+  </section>
+  <section class="tinted" id="demo">
+    <div class="wrap">
+      <div class="section-head"><span class="section-kicker">02 / THE DEMO</span><h2>Teach → Think → Act</h2><p>来場者への説明は、この3つだけ。個々の技術を「一連の実世界の作業」としてつなぐのが今回の挑戦です。</p></div>
+      <div class="cards">
+        <article class="card"><span class="card-num">STEP 01</span><h3>Teach <span aria-hidden="true">↗</span></h3><p>人間がSO-101に作業の動きを教える。Leader / Followerによるテレオペレーションや、模倣学習のためのデータ収集を扱います。</p><div class="tech">SO-101 · LeRobot · Teleoperation</div></article>
+        <article class="card"><span class="card-num">STEP 02</span><h3>Think <span aria-hidden="true">↗</span></h3><p>「右の箱に入れて」といった指示を、LLMが構造化されたタスクに変換。AIが関節を直接制御するのではなく、実行するSkillを選びます。</p><div class="tech">LLM · Task interpretation · Skill selection</div></article>
+        <article class="card"><span class="card-num">STEP 03</span><h3>Act <span aria-hidden="true">↗</span></h3><p>選択されたRobot Skill / Policyを通じてSO-101が動作します。模倣学習によるACTや、安定動作する事前定義Skillを用途に応じて検討します。</p><div class="tech">Robot Skill · ACT（候補） · SO-101</div></article>
+      </div>
+    </div>
+  </section>
+  <section id="system">
+    <div class="wrap">
+      <div class="section-head"><span class="section-kicker">03 / UNDER THE HOOD</span><h2>どうつないでいるのか</h2><p>LLMには「何をするか」を考えさせ、ロボットの連続動作は制御側へ任せる。役割を分けて、小さく検証できる構成を目指しています。</p></div>
+      <div class="arch">
+        <div class="architecture" role="img" aria-label="人間の指示、LLMでのタスク解釈、Robot SkillやPolicy、LeRobot経由のSO-101制御">
+          <div class="arch-node"><span class="mini">INPUT</span><strong>人間の指示</strong><span>「右の箱に入れて」</span></div><div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-node"><span class="mini">THINK</span><strong>LLM</strong><span>タスクを構造化</span></div><div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-node"><span class="mini">ACTION</span><strong>Robot Skill / Policy</strong><span>動作を選択・実行</span></div><div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-node"><span class="mini">PHYSICAL WORLD</span><strong>SO-101</strong><span>LeRobot / 実機制御</span></div>
+        </div>
+        <div class="architecture-note"><span><strong>中心となる技術：</strong>SO-101 · LeRobot · Python · LLM</span><span><strong>検証・拡張候補：</strong>ACT · ROS 2 · MCP · VLA</span></div>
+      </div>
+      <div class="note"><strong>技術の位置づけ：</strong>LeRobotやROS 2などのオープンソース技術を基盤にします。外部LLMのAPIを利用する場合、そのサービス自体をOSSとは表現しません。ACT・ROS 2・MCP・VLAの採否や実演範囲は、実機検証の結果に合わせて公開内容を更新します。</div>
+    </div>
+  </section>
+  <section class="tinted" id="notes">
+    <div class="wrap">
+      <div class="section-head"><span class="section-kicker">04 / ENGINEERING NOTES</span><h2>動かすだけでは、終わらない。</h2><p>Physical AIの難しさは、AIモデルの外側にもあります。開発で得た知見も、展示の一部です。</p></div>
+      <div class="tech-grid">
+        <div class="feature"><h3>01 · 技術をつなぐ</h3><p>学習、言語による指示、タスク選択、ロボット制御。それぞれの境界を明確にして検証します。</p></div>
+        <div class="feature"><h3>02 · 環境を固定する</h3><p>カメラ位置、照明、作業面、ラックの治具。再現性を上げる物理的な工夫も大切な設計です。</p></div>
+        <div class="feature"><h3>03 · 安全に繰り返す</h3><p>暴走や衝突を避けながら、会場で繰り返せるデモを優先します。安定した最小構成から段階的に拡張します。</p></div>
+        <div class="feature"><h3>04 · 成功も限界も公開する</h3><p>学習済みPolicyによる動作と、事前定義Skillによる動作は分けて説明します。未達成の部分も次の検証課題として共有します。</p></div>
+      </div>
+    </div>
+  </section>
+  <section id="links">
+    <div class="wrap">
+      <div class="section-head"><span class="section-kicker">05 / KEEP EXPLORING</span><h2>作り方を、持ち帰ろう。</h2><p>興味を持ったら、開発の記録や関連する活動をご覧ください。展示当日の成果・写真・動画も、公開可能な範囲で追記していく予定です。</p></div>
+      <div class="links">
+        <a class="link-card" href="https://github.com/mikami235/osc2026-so-101/tree/osc2026" target="_blank" rel="noopener noreferrer"><span><strong>開発リポジトリ</strong><small>SO-101 / LeRobotをベースにした開発コード</small></span><span class="point" aria-hidden="true">↗</span></a>
+        <a class="link-card" href="https://github.com/mikami235" target="_blank" rel="noopener noreferrer"><span><strong>GitHub プロフィール</strong><small>Three Up Automataの活動と他の制作物</small></span><span class="point" aria-hidden="true">↗</span></a>
+        <a class="link-card" href="https://qiita.com/mikami333" target="_blank" rel="noopener noreferrer"><span><strong>技術記事（Qiita）</strong><small>ロボティクス・AIの関連する記事</small></span><span class="point" aria-hidden="true">↗</span></a>
+        <a class="link-card" href="https://ospn.jp/" target="_blank" rel="noopener noreferrer"><span><strong>Open Source Conference</strong><small>OSCのイベント情報</small></span><span class="point" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap footer-inner"><span><strong>THREE UP AUTOMATA</strong> — Physical AIを、自分の手でつくる。</span><span>OSC2026 Tokyo/Fall · 2026.10.17</span></div>
+</footer>
+</body>
+</html>
